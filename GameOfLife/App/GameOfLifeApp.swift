@@ -2,7 +2,7 @@
 //  GameOfLifeApp.swift
 //  GameOfLife
 //
-//  Created by Илья Дубенский on 25.05.2023.
+//  Created by Илья Дубенский on 11.05.2023.
 //
 
 import SwiftUI
@@ -11,7 +11,7 @@ import SwiftUI
 struct GameOfLifeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            InfoView()
         }
     }
 }
