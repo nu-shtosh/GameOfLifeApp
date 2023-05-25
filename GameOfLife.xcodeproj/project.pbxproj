@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B84793252A1F307600C48F38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B84793242A1F307600C48F38 /* Assets.xcassets */; };
 		B89471AC2A1F2A5B00C3442C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89471AB2A1F2A5B00C3442C /* Preview Assets.xcassets */; };
 		B89471C42A1F2A9800C3442C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89471B42A1F2A9800C3442C /* GridView.swift */; };
 		B89471C52A1F2A9800C3442C /* GridCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89471B52A1F2A9800C3442C /* GridCellView.swift */; };
@@ -16,10 +17,10 @@
 		B89471CA2A1F2A9800C3442C /* GameOfLife.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89471BE2A1F2A9800C3442C /* GameOfLife.swift */; };
 		B89471CB2A1F2A9800C3442C /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89471C02A1F2A9800C3442C /* InfoView.swift */; };
 		B89471CC2A1F2A9800C3442C /* BackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89471C22A1F2A9800C3442C /* BackView.swift */; };
-		B89471CD2A1F2A9800C3442C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89471C32A1F2A9800C3442C /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B84793242A1F307600C48F38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B89471A12A1F2A5A00C3442C /* GameOfLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameOfLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89471AB2A1F2A5B00C3442C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B89471B42A1F2A9800C3442C /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
@@ -30,7 +31,6 @@
 		B89471BE2A1F2A9800C3442C /* GameOfLife.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOfLife.swift; sourceTree = "<group>"; };
 		B89471C02A1F2A9800C3442C /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		B89471C22A1F2A9800C3442C /* BackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackView.swift; sourceTree = "<group>"; };
-		B89471C32A1F2A9800C3442C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Develope/GameOfLife/GameOfLife/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				B89471B72A1F2A9800C3442C /* App */,
-				B89471C32A1F2A9800C3442C /* Assets.xcassets */,
+				B84793242A1F307600C48F38 /* Assets.xcassets */,
 				B89471BF2A1F2A9800C3442C /* Information */,
 				B89471B92A1F2A9800C3442C /* Legend */,
 				B89471BD2A1F2A9800C3442C /* Model */,
@@ -200,7 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B89471AC2A1F2A5B00C3442C /* Preview Assets.xcassets in Resources */,
-				B89471CD2A1F2A9800C3442C /* Assets.xcassets in Resources */,
+				B84793252A1F307600C48F38 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
