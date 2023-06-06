@@ -30,9 +30,6 @@ struct GridView: View {
     }
 }
 
-
-
-
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
         GridView(game: GameOfLife.init(rows: 20, columns: 20))

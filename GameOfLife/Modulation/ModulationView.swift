@@ -10,67 +10,64 @@ import SwiftUI
 struct ModulationView: View {
 
     // MARK: - Observed Properties
-    @ObservedObject private var game = GameOfLife(rows: 40, columns: 30)
+    @ObservedObject private var game = GameOfLife(rows: 50, columns: 35)
 
     // MARK: - State Properties
     @State private var isRunning = false
-    @State private var showLegend = false
-    @State private var seconds = 0
-    @State private var scale: CGFloat = 1.0
+    @State private var presentAlert = false
+
     @State private var offset: CGSize = .zero
+    @State private var scale: CGFloat = 1.0
     @State private var previousScale: CGFloat = 1.0
     @State private var currentScale: CGFloat = 1.0
+    @State private var stableGenerationCount: Int = 0
+    @State private var stableLiveElementsCount: Int = 0
+    @State private var timerSpeed = 0.5
 
     // MARK: - Private Properties
-    private let timer = Timer.publish(every: 1,
-                                      on: .main,
-                                      in: .common).autoconnect()
+    //    private let timer = Timer.publish(every: 0.1,
+    //                                      on: .main,
+    //                                      in: .common).autoconnect()
     private let minimumScale: CGFloat = 0.9
     private let maximumScale: CGFloat = 3.0
 
+
     // MARK: - Computed Properties
-    private var timerText: String {
-        let minutes = seconds / 60
-        let seconds = seconds % 60
-        return "Время: \(String(format: "%02d:%02d", minutes, seconds))"
+    private var generationText: String {
+        "Поколение: " + game.generationCount.description
     }
 
-    private var liveElements: Int {
-        var count = 0
-
-        for row in game.grid {
-            for element in row {
-                count += element ? 1 : 0
-            }
-        }
-
-        return count
+    private var liveElementsText: String {
+        "Население: " + game.liveElementsCount.description
     }
+
 
     // MARK: - Body
     var body: some View {
+        let timer = Timer.publish(every: timerSpeed,
+                                  on: .main,
+                                  in: .common).autoconnect()
         ZStack {
             BackView()
             VStack {
-                // Info
+                // MARK: - Generation Label
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text(timerText)
-                            .font(.headline)
-                            .foregroundColor(Color.black)
-                        Text("Население: " + liveElements.description)
-                            .font(.headline)
-                            .foregroundColor(Color.black)
-                    }
-                    Spacer()
-                }
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.black, lineWidth: 1)
-                )
+                    Text(generationText)
+                        .font(.system(size: 14, weight: .bold))
+                        .frame(width: 150)
 
-                // Grid
+                    Spacer()
+                    Spacer()
+                    Spacer()
+
+                    // MARK: - Live Elements Label
+                    Text(liveElementsText)
+                        .font(.system(size: 14, weight: .bold))
+                        .frame(width: 150)
+                }
+
+
+                // MARK: - Grid
                 GeometryReader { geometry in
                     ScrollView([.horizontal, .vertical]) {
                         GridView(game: game)
@@ -81,96 +78,123 @@ struct ModulationView: View {
                             }
                             .onDisappear {
                                 isRunning = false
-                                seconds = 0
-                                DispatchQueue.global().async {
-                                    game.newGame()
-                                }
+                                game.newGame()
                             }
                             .frame(width: geometry.size.width * scale * currentScale,
-                                   height: geometry.size.height * scale * currentScale)                    .scrollIndicators(.hidden)
+                                   height: geometry.size.height * scale * currentScale)
+                            .scrollIndicators(.hidden)
                             .gesture(zoomAndScrollGesture)
                     }
                 }
 
-                // Buttons
-                VStack {
+                // MARK: - Randomize Button
+                HStack {
                     Button(action: {
                         game.randomizeGrid()
+                        game.generationCount = 0
                     }) {
-                        Text("Случайное заполнение")
-                            .frame(width: 200, height: 20)
-                            .padding()
-                            .background(.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        Image(systemName: "shuffle.circle")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
                     }
-                    HStack {
-                        Button(action: {
-                            isRunning = false
-                            seconds = 0
-                            DispatchQueue.global().async {
-                                game.newGame()
-                            }
-                        }) {
-                            Text("Новая игра")
-                                .frame(width: 100, height: 20)
-                                .padding()
-                                .background(liveElements == 0 ? .gray : .red)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
+
+                    Spacer()
+
+                    // MARK: - Clear Button
+                    Button(action: {
+                        isRunning = false
+                        game.newGame()
+                    }) {
+                        Image(systemName: "trash.circle")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
+                    }
+
+                    Spacer()
+
+                    // MARK: - Speed Buttons
+                    Button(action: {
+                        if timerSpeed < 0.9 {
+                            timerSpeed += 0.05
                         }
-                        .disabled(liveElements == 0)
-                        Spacer()
-                        Button(action: {
-                            isRunning.toggle()
-                        }) {
-                            Text(isRunning ? "Стоп" : "Старт")
-                                .frame(width: 100, height: 20)
-                                .padding()
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
+                    }) {
+                        Image(systemName: "minus.circle")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
+                    }
+                    Button(action: {
+                        if timerSpeed > 0.1 {
+                            timerSpeed -= 0.05
                         }
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
+                    }
+                    Spacer()
+
+
+
+                    // MARK: - Play / Pause
+                    Button(action: {
+                        isRunning.toggle()
+                    }) {
+                        Image(systemName: isRunning ? "pause.circle" : "play.circle")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
                     }
                 }
-                .padding(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.black, lineWidth: 1)
-                )
             }
             .padding()
             .navigationBarTitle("Модуляция", displayMode: .inline)
-            .navigationBarItems(trailing: modulationButton)
+            .navigationBarItems(trailing: goToLegendButton)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(Color.white, for: .navigationBar)
             .toolbarColorScheme(ColorScheme.light, for: .navigationBar)
             .foregroundColor(.black)
         }
-    }
-
-    private func updateGame() {
-        guard isRunning else { return }
-
-        DispatchQueue.global(qos: .background).async {
-            game.nextGeneration()
-            let currentLiveElements = liveElements
-
-            DispatchQueue.main.async {
-                seconds += 1
-                if currentLiveElements == 0 {
-                    isRunning = false
-                }
-            }
+        .alert(isPresented: $presentAlert) {
+            Alert(title: Text("Стабильное состояние"),
+                  message: Text("Количество живых элементов не менялось в течение 50 поколений."),
+                  dismissButton: .default(Text("Ок")))
         }
     }
 
-    private var modulationButton: some View {
+    // MARK: - Update Game
+    private func updateGame() {
+        guard isRunning else { return }
+
+        game.nextGeneration()
+
+        let currentLiveElements = game.liveElementsCount
+
+        if currentLiveElements == stableLiveElementsCount {
+            stableGenerationCount += 1
+        } else {
+            stableGenerationCount = 0
+            stableLiveElementsCount = currentLiveElements
+        }
+
+        if stableGenerationCount >= 50 {
+            isRunning = false
+            presentAlert = true
+            stableGenerationCount = 0
+        }
+    }
+
+    // MARK: - Go To Legend Button
+    private var goToLegendButton: some View {
         NavigationLink(destination: LegendView()) {
             Text("К легенде")
         }
     }
 
+    // MARK: - Zoom And Scroll Gesture
     private var zoomAndScrollGesture: some Gesture {
         SimultaneousGesture(
             MagnificationGesture()
@@ -187,7 +211,7 @@ struct ModulationView: View {
                     offset.width += value.translation.width
                     offset.height += value.translation.height
                 }
-                .onEnded { value in
+                .onEnded { _ in
                     offset = .zero
                 }
         )

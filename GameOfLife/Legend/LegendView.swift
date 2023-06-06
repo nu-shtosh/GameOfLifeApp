@@ -13,6 +13,7 @@ struct LegendView: View {
         "block": "Блок (Block)",
         "bee-hive": "Пчелиный улей (Bee-Hive)",
         "loaf": "Буханка (Loaf)",
+        "ship": "Корабль (Ship)",
         "boat": "Лодка (Boat)",
         "tub": "Ванна (Tub)"
     ]
@@ -48,6 +49,8 @@ struct LegendView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 70, height: 70)
+                                .cornerRadius(12)
+
                             Spacer()
                             Text(value)
                                 .foregroundColor(Color.black)
@@ -71,6 +74,7 @@ struct LegendView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 70, height: 70)
+                                .cornerRadius(12)
                             Spacer()
                             Text(value)
                                 .foregroundColor(Color.black)
@@ -97,6 +101,8 @@ struct LegendView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 70, height: 70)
+                                .cornerRadius(12)
+
                             Spacer()
                             Text(value)
                                 .foregroundColor(Color.black)

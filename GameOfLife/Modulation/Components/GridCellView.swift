@@ -15,9 +15,9 @@ struct GridCellView: View {
             Rectangle()
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .foregroundColor(isAlive ? .black : .clear)
-                .border(Color(.gray).opacity(0.3), width: 1)
-                .animation(.easeInOut(duration: 0.1), value: isAlive)
-                .contentShape(Rectangle()) // Добавленный модификатор
+                .cornerRadius(geometry.size.width / 2)
+                .border(Color(.black).opacity(0.2), width: 1)
+                .contentShape(Rectangle())
 
         }
     }
