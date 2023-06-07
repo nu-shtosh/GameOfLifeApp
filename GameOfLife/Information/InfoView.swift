@@ -9,8 +9,8 @@ import SwiftUI
 
 struct InfoView: View {
 
+    // MARK: - Main Body
     var body: some View {
-
         NavigationView {
             ZStack {
                 BackView()
@@ -43,6 +43,7 @@ struct InfoView: View {
     }
 }
 
+// MARK: - Rules View
 struct RulesView: View {
     var body: some View {
         VStack {
@@ -54,19 +55,15 @@ struct RulesView: View {
                 Text("- Любая живая клетка с менее чем двумя живыми соседям и умирает от одиночества.")
                     .font(.callout)
                     .foregroundColor(.black)
-                    .lineLimit(3)
                 Text("- Любая живая клетка с двумя или тремя живыми соседями продолжает жить и на следующем шаге.")
                     .font(.callout)
                     .foregroundColor(.black)
-                    .lineLimit(3)
                 Text("- Любая живая клетка с более чем тремя живыми соседями умирает от перенаселения.")
                     .font(.callout)
-                    .lineLimit(3)
                     .foregroundColor(.black)
                 Text("- Любая мертвая клетка с ровно тремя живыми соседями становится живой.")
                     .font(.callout)
                     .foregroundColor(.black)
-                    .lineLimit(3)
                 Text("- Любая клетка может иметь только 8 соседей.")
                     .font(.callout)
                     .foregroundColor(.black)
@@ -78,10 +75,11 @@ struct RulesView: View {
                     .stroke(Color.black, lineWidth: 1)
             )
         }
-        .ignoresSafeArea()
+        .frame(width: Constants.shared.screen.width * 0.9)
     }
 }
 
+// MARK: - Title View
 struct TitleView: View {
     var body: some View {
         VStack {
@@ -98,10 +96,11 @@ struct TitleView: View {
                             .stroke(Color.black, lineWidth: 1)
                     )
         }
-        .ignoresSafeArea()
+        .frame(width: Constants.shared.screen.width * 0.9)
     }
 }
 
+// MARK: - Control View
 struct ControlView: View {
     var body: some View {
         VStack {
@@ -109,8 +108,10 @@ struct ControlView: View {
                 .font(.title3)
                 .bold()
                 .foregroundColor(.black)
+                .frame(width: Constants.shared.screen.width * 0.9)
+
             VStack(alignment: .leading, spacing: 4) {
-                Text("- Чтобы пометить/снять пометку с клетки, щелкните по ней.")
+                Text("- Чтобы пометить/снять пометку с клетки,                  щелкните по ней.")
                     .font(.callout)
                     .foregroundColor(.black)
                 Text("- Для запуска/остановки эволюции нажмите кнопку \"Старт\"/\"Стоп\".")
@@ -119,7 +120,7 @@ struct ControlView: View {
                 Text("- Чтобы заполнить поле случайными живыми клетками  \"Случайное заполнение\".")
                     .font(.callout)
                     .foregroundColor(.black)
-                Text("- Чтобы очистить поле нажмите \"Новая игра\".")
+                Text("- Чтобы очистить поле нажмите \"Новая игра\"")
                     .font(.callout)
                     .foregroundColor(.black)
             }
@@ -129,11 +130,11 @@ struct ControlView: View {
                     .stroke(Color.black, lineWidth: 1)
             )
         }
-        .ignoresSafeArea()
-
+        .frame(width: Constants.shared.screen.width * 0.9)
     }
 }
 
+// MARK: - Target View
 struct TargetView: View {
     var body: some View {
         VStack {
@@ -150,10 +151,11 @@ struct TargetView: View {
                         .stroke(Color.black, lineWidth: 1)
                 )
         }
-        .ignoresSafeArea()
+        .frame(width: Constants.shared.screen.width * 0.9)
     }
 }
 
+// MARK: - InfoView Preview
 struct InfoView_Previews: PreviewProvider {
     static var previews: some View {
         InfoView()

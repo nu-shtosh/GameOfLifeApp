@@ -10,27 +10,27 @@ import SwiftUI
 struct ModulationView: View {
 
     // MARK: - Observed Properties
-    @ObservedObject private var game = GameOfLife(rows: 50, columns: 35)
+    @ObservedObject private var game = GameOfLife(rows: 54, columns: 31)
 
     // MARK: - State Properties
     @State private var isRunning = false
     @State private var presentAlert = false
 
     @State private var offset: CGSize = .zero
+
     @State private var scale: CGFloat = 1.0
     @State private var previousScale: CGFloat = 1.0
     @State private var currentScale: CGFloat = 1.0
+
     @State private var stableGenerationCount: Int = 0
     @State private var stableLiveElementsCount: Int = 0
+
     @State private var timerSpeed = 0.5
+    @State private var timerText = 9
 
     // MARK: - Private Properties
-    //    private let timer = Timer.publish(every: 0.1,
-    //                                      on: .main,
-    //                                      in: .common).autoconnect()
     private let minimumScale: CGFloat = 0.9
     private let maximumScale: CGFloat = 3.0
-
 
     // MARK: - Computed Properties
     private var generationText: String {
@@ -41,6 +41,9 @@ struct ModulationView: View {
         "Население: " + game.liveElementsCount.description
     }
 
+    private var speedText: String {
+        "Cкорость: " + timerText.description
+    }
 
     // MARK: - Body
     var body: some View {
@@ -50,20 +53,23 @@ struct ModulationView: View {
         ZStack {
             BackView()
             VStack {
-                // MARK: - Generation Label
+                // MARK: - Info Labels
                 HStack {
                     Text(generationText)
                         .font(.system(size: 14, weight: .bold))
-                        .frame(width: 150)
+                        .frame(width: 130, alignment: .leading)
+                        .lineLimit(1)
 
-                    Spacer()
-                    Spacer()
-                    Spacer()
-
-                    // MARK: - Live Elements Label
                     Text(liveElementsText)
                         .font(.system(size: 14, weight: .bold))
-                        .frame(width: 150)
+                        .frame(width: 120, alignment: .leading)
+
+                    Spacer()
+
+                    Text(speedText)
+                        .font(.system(size: 14, weight: .bold))
+                        .frame(width: 100, alignment: .trailing)
+
                 }
 
 
@@ -91,6 +97,7 @@ struct ModulationView: View {
                 HStack {
                     Button(action: {
                         game.randomizeGrid()
+                        isRunning = false
                         game.generationCount = 0
                     }) {
                         Image(systemName: "shuffle.circle")
@@ -118,6 +125,7 @@ struct ModulationView: View {
                     Button(action: {
                         if timerSpeed < 0.9 {
                             timerSpeed += 0.05
+                            timerText -= 1
                         }
                     }) {
                         Image(systemName: "minus.circle")
@@ -128,6 +136,7 @@ struct ModulationView: View {
                     Button(action: {
                         if timerSpeed > 0.1 {
                             timerSpeed -= 0.05
+                            timerText += 1
                         }
                     }) {
                         Image(systemName: "plus.circle")
@@ -135,9 +144,8 @@ struct ModulationView: View {
                             .frame(width: 50, height: 50)
                             .scaledToFit()
                     }
+
                     Spacer()
-
-
 
                     // MARK: - Play / Pause
                     Button(action: {
@@ -161,7 +169,12 @@ struct ModulationView: View {
         .alert(isPresented: $presentAlert) {
             Alert(title: Text("Стабильное состояние"),
                   message: Text("Количество живых элементов не менялось в течение 50 поколений."),
-                  dismissButton: .default(Text("Ок")))
+                  primaryButton: .destructive(Text("Очистить"), action: {
+                isRunning = false
+                game.newGame()
+            }),
+                  secondaryButton: .default(Text("Продолжить"))
+            )
         }
     }
 

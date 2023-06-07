@@ -9,27 +9,29 @@ import SwiftUI
 
 struct LegendView: View {
 
-    let stillLifes = [
+    private let stilllifes = [
         "block": "Блок (Block)",
         "bee-hive": "Пчелиный улей (Bee-Hive)",
         "loaf": "Буханка (Loaf)",
         "ship": "Корабль (Ship)",
         "boat": "Лодка (Boat)",
+        "snake": "Змея (Snake)",
         "tub": "Ванна (Tub)"
     ]
 
-    let oscillators = [
+    private let oscillators = [
         "blinker": "Поворотник (Blinker)",
         "toad": "Жаба (Toad)",
         "beacon": "Маяк (Beacon)",
         "pulsar": "Пульсар (Pulsar)",
+        "eight": "Восемь (Eight)",
         "penta-decathlon": "Пента-Десятиборье (Penta-Decathlon)"
     ]
 
-    let spaceships = [
+    private let spaceships = [
         "glider": "Планер (Glider)",
         "light-weight-spaceship": "Легкий космический корабль (Light-weight Spaceship)",
-        "middle-weight-spaceship": "Средний космический корабль (Middle-weight Spaceship)",
+        "middle-weight-spaceship": "Средний космический корабль /n (Middle-weight Spaceship)",
         "heavy-weight-spaceship": "Тяжелый космический корабль (Heavy-weight Spaceship)"
     ]
 
@@ -37,23 +39,28 @@ struct LegendView: View {
         ZStack {
             BackView()
             ScrollView {
+
+                // MARK: - Stilllifes
                 Section(header:
-                            Text("Still Lifes:")
+                            Text("Все еще живы(Stilllifes):")
                     .font(.title3)
                     .foregroundColor(Color.black)
                     .bold()
                 ){
-                    ForEach(stillLifes.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                        HStack {
-                            Image(key)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 70, height: 70)
-                                .cornerRadius(12)
+                    VStack {
+                        ForEach(stilllifes.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                            HStack {
+                                Image(key)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 70, height: 70)
 
-                            Spacer()
-                            Text(value)
-                                .foregroundColor(Color.black)
+                                Spacer()
+
+                                Text(value)
+                                    .font(.callout)
+                                    .foregroundColor(Color.black)
+                            }
                         }
                     }
                     .padding(8)
@@ -62,23 +69,30 @@ struct LegendView: View {
                             .stroke(Color.black, lineWidth: 1)
                     )
                 }
+                .frame(width: Constants.shared.screen.width * 0.9)
+                .padding(.bottom, 10)
 
+                // MARK: - Oscillators
                 Section(header:
-                            Text("Oscillators:")
+                            Text("Колеблющиеся(Oscillators):")
                     .font(.title3)
                     .bold()
                 ){
-                    ForEach(oscillators.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                        HStack {
-                            Image(key)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 70, height: 70)
-                                .cornerRadius(12)
-                            Spacer()
-                            Text(value)
-                                .foregroundColor(Color.black)
+                    VStack {
 
+                        ForEach(oscillators.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                            HStack {
+                                Image(key)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 70, height: 70)
+
+                                Spacer()
+
+                                Text(value)
+                                    .foregroundColor(Color.black)
+                                    .font(.callout)
+                            }
                         }
                     }
                     .padding(8)
@@ -87,26 +101,30 @@ struct LegendView: View {
                             .stroke(Color.black, lineWidth: 1)
                     )
                 }
+                .frame(width: Constants.shared.screen.width * 0.9)
 
-
+                // MARK: - Spaceships
                 Section(header:
-                            Text("Spaceships:")
+                            Text("Движующиеся(Spaceships):")
                     .foregroundColor(Color.black)
                     .font(.title3)
                     .bold()
                 ) {
-                    ForEach(spaceships.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                        HStack {
-                            Image(key)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 70, height: 70)
-                                .cornerRadius(12)
+                    VStack {
+                        ForEach(spaceships.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                            HStack {
+                                Image(key)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 70, height: 70)
 
-                            Spacer()
-                            Text(value)
-                                .foregroundColor(Color.black)
+                                Spacer()
 
+                                Text(value)
+                                    .foregroundColor(Color.black)
+                                    .font(.callout)
+
+                            }
                         }
                     }
                     .padding(8)
@@ -115,14 +133,17 @@ struct LegendView: View {
                             .stroke(Color.black, lineWidth: 1)
                     )
                 }
+                .frame(width: Constants.shared.screen.width * 0.9)
             }
-            .padding(10)
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+            .scrollIndicators(.hidden)
             .navigationBarTitle("Легенда", displayMode: .inline)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(Color.white, for: .navigationBar)
             .toolbarColorScheme(ColorScheme.light, for: .navigationBar)
             .foregroundColor(.black)
         }
+
     }
 }
 
