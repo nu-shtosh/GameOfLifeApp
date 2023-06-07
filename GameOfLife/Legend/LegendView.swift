@@ -25,14 +25,22 @@ struct LegendView: View {
         "beacon": "Маяк (Beacon)",
         "pulsar": "Пульсар (Pulsar)",
         "eight": "Восемь (Eight)",
-        "penta-decathlon": "Пента-Десятиборье (Penta-Decathlon)"
+        "penta-decathlon": """
+        Пента-Десятиборье \n(Penta-Decathlon)
+        """
     ]
 
     private let spaceships = [
         "glider": "Планер (Glider)",
-        "light-weight-spaceship": "Легкий космический корабль (Light-weight Spaceship)",
-        "middle-weight-spaceship": "Средний космический корабль /n (Middle-weight Spaceship)",
-        "heavy-weight-spaceship": "Тяжелый космический корабль (Heavy-weight Spaceship)"
+        "light-weight-spaceship": """
+        Легкий космический корабль \n(Light-weight Spaceship)
+        """,
+        "middle-weight-spaceship": """
+        Средний космический корабль \n(Middle-weight Spaceship)
+        """,
+        "heavy-weight-spaceship": """
+        Тяжелый космический корабль \n(Heavy-weight Spaceship)
+        """
     ]
 
     var body: some View {
@@ -42,7 +50,7 @@ struct LegendView: View {
 
                 // MARK: - Stilllifes
                 Section(header:
-                            Text("Все еще живы(Stilllifes):")
+                            Text("Все еще живы (Stilllifes):")
                     .font(.title3)
                     .foregroundColor(Color.black)
                     .bold()
@@ -74,7 +82,7 @@ struct LegendView: View {
 
                 // MARK: - Oscillators
                 Section(header:
-                            Text("Колеблющиеся(Oscillators):")
+                            Text("Колеблющиеся (Oscillators):")
                     .font(.title3)
                     .bold()
                 ){
@@ -105,7 +113,7 @@ struct LegendView: View {
 
                 // MARK: - Spaceships
                 Section(header:
-                            Text("Движующиеся(Spaceships):")
+                            Text("Движующиеся (Spaceships):")
                     .foregroundColor(Color.black)
                     .font(.title3)
                     .bold()

@@ -104,6 +104,7 @@ struct ModulationView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .scaledToFit()
+                            .foregroundColor(.black)
                     }
 
                     Spacer()
@@ -117,6 +118,7 @@ struct ModulationView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .scaledToFit()
+                            .foregroundColor(.black)
                     }
 
                     Spacer()
@@ -133,6 +135,9 @@ struct ModulationView: View {
                             .frame(width: 50, height: 50)
                             .scaledToFit()
                     }
+                    .disabled(timerSpeed > 0.9)
+                    .foregroundColor(timerSpeed < 0.9 ? .black : .gray)
+
                     Button(action: {
                         if timerSpeed > 0.1 {
                             timerSpeed -= 0.05
@@ -144,6 +149,8 @@ struct ModulationView: View {
                             .frame(width: 50, height: 50)
                             .scaledToFit()
                     }
+                    .disabled(timerSpeed < 0.1)
+                    .foregroundColor(timerSpeed > 0.1 ? .black : .gray)
 
                     Spacer()
 
@@ -155,6 +162,7 @@ struct ModulationView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .scaledToFit()
+                            .foregroundColor(.black)
                     }
                 }
             }
