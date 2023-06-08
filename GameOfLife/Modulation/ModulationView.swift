@@ -48,8 +48,8 @@ struct ModulationView: View {
     // MARK: - Body
     var body: some View {
         let timer = Timer.publish(every: timerSpeed,
-                                  on: .main, in:
-                .common).autoconnect()
+                                  on: .main,
+                                  in: .common).autoconnect()
 
         ZStack {
             BackView()
