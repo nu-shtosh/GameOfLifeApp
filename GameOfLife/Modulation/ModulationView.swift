@@ -213,38 +213,6 @@ struct ModulationView: View {
             Text("К легенде")
         }
     }
-
-    // MARK: - Zoom And Scroll Gesture
-    private var zoomAndScrollGesture: some Gesture {
-        SimultaneousGesture(
-            MagnificationGesture()
-                .onChanged { value in
-                    let newScale = previousScale * value.magnitude
-                    currentScale = min(maximumScale, max(minimumScale, newScale))
-                }
-                .onEnded { _ in
-                    previousScale = currentScale
-                },
-            DragGesture()
-                .onChanged { value in
-                    let scaledWidth = CGFloat(game.columns) * scale * currentScale
-                    let scaledHeight = CGFloat(game.rows) * scale * currentScale
-                    let maxOffsetX = (scaledWidth - UIScreen.main.bounds.width) / 2
-                    let maxOffsetY = (scaledHeight - UIScreen.main.bounds.height) / 2
-
-                    offset.width += value.translation.width
-                    offset.height += value.translation.height
-
-                    // Ограничение смещения в пределах доступной области
-                    offset.width = max(-maxOffsetX, min(maxOffsetX, offset.width))
-                    offset.height = max(-maxOffsetY, min(maxOffsetY, offset.height))
-                }
-                .onEnded { _ in
-                    offset = .zero
-                }
-        )
-    }
-
 }
 
 // MARK: - Preview
