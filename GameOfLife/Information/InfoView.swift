@@ -24,7 +24,10 @@ struct InfoView: View {
 
                     TargetView()
                 }
-                .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                .padding(EdgeInsets(top: 10,
+                                    leading: 10,
+                                    bottom: 10,
+                                    trailing: 10))
             }
             .scrollIndicators(.hidden)
             .navigationBarTitle("Информация", displayMode: .inline)

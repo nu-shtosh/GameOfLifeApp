@@ -48,8 +48,9 @@ struct ModulationView: View {
     // MARK: - Body
     var body: some View {
         let timer = Timer.publish(every: timerSpeed,
-                                  on: .main,
-                                  in: .common).autoconnect()
+                                  on: .main, in:
+                .common).autoconnect()
+
         ZStack {
             BackView()
             VStack {
@@ -75,7 +76,6 @@ struct ModulationView: View {
 
                 // MARK: - Grid
                 GeometryReader { geometry in
-                    ScrollView([.horizontal, .vertical]) {
                         GridView(game: game)
                             .scaleEffect(scale)
                             .offset(offset)
@@ -89,9 +89,8 @@ struct ModulationView: View {
                             .frame(width: geometry.size.width * scale * currentScale,
                                    height: geometry.size.height * scale * currentScale)
                             .scrollIndicators(.hidden)
-                            .gesture(zoomAndScrollGesture)
-                    }
                 }
+
 
                 // MARK: - Randomize Button
                 HStack {
@@ -225,18 +224,27 @@ struct ModulationView: View {
                 }
                 .onEnded { _ in
                     previousScale = currentScale
-                    scale = 1.0
                 },
             DragGesture()
                 .onChanged { value in
+                    let scaledWidth = CGFloat(game.columns) * scale * currentScale
+                    let scaledHeight = CGFloat(game.rows) * scale * currentScale
+                    let maxOffsetX = (scaledWidth - UIScreen.main.bounds.width) / 2
+                    let maxOffsetY = (scaledHeight - UIScreen.main.bounds.height) / 2
+
                     offset.width += value.translation.width
                     offset.height += value.translation.height
+
+                    // Ограничение смещения в пределах доступной области
+                    offset.width = max(-maxOffsetX, min(maxOffsetX, offset.width))
+                    offset.height = max(-maxOffsetY, min(maxOffsetY, offset.height))
                 }
                 .onEnded { _ in
                     offset = .zero
                 }
         )
     }
+
 }
 
 // MARK: - Preview

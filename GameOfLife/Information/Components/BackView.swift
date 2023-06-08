@@ -11,13 +11,14 @@ struct BackView: View {
     var body: some View {
         GridForBack()
             .background(Color.white)
+
     }
 }
 
 struct GridForBack: View {
     var body: some View {
         VStack {
-            ForEach(0..<28) { _ in
+            ForEach(0..<26) { _ in
                 HStack {
                     ForEach(0..<14) { _ in
                         CellForBackView()
