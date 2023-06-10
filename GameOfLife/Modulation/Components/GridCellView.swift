@@ -16,7 +16,11 @@ struct GridCellView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .foregroundColor(isAlive ? .black : .clear)
                 .cornerRadius(geometry.size.width / 2)
-                .border(Color(.black).opacity(0.2), width: 1)
+                .aspectRatio(1, contentMode: .fit)
+                .overlay(
+                    RoundedRectangle(cornerRadius: geometry.size.width / 2)
+                        .strokeBorder(Color(.black).opacity(0.2), lineWidth: 1)
+                )
                 .contentShape(Rectangle())
         }
         .drawingGroup()
