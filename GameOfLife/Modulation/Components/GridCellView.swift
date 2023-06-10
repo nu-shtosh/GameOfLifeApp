@@ -18,8 +18,8 @@ struct GridCellView: View {
                 .cornerRadius(geometry.size.width / 2)
                 .border(Color(.black).opacity(0.2), width: 1)
                 .contentShape(Rectangle())
-
         }
+        .drawingGroup()
     }
 }
 

@@ -27,6 +27,7 @@ struct GridView: View {
                 }
             }
         }
+        .drawingGroup()
     }
 }
 
