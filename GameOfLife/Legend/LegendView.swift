@@ -150,9 +150,11 @@ struct LegendView: View {
             .toolbarBackground(Color.white, for: .navigationBar)
             .toolbarColorScheme(ColorScheme.light, for: .navigationBar)
             .foregroundColor(.black)
+            .padding(.top, Constants.shared.calculateTopPadding())
+            .padding(.bottom, Constants.shared.calculateTopPadding())
         }
-
     }
+
 }
 
 

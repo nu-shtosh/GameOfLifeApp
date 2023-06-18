@@ -13,4 +13,17 @@ final class Constants {
 
     let screen = UIScreen.main.bounds
 
+    func calculateTopPadding() -> CGFloat {
+        let screenHeight = UIScreen.main.bounds.height
+        print(screenHeight)
+
+        switch screenHeight {
+        case 0...666: // Размер экрана iPhone SE
+            return 64
+        case 667...812:
+            return 32
+        default:
+            return 0
+        }
+    }
 }

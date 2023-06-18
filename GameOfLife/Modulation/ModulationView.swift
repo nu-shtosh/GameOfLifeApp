@@ -10,7 +10,7 @@ import SwiftUI
 struct ModulationView: View {
 
     // MARK: - Observed Properties
-    @ObservedObject private var game = GameOfLife(rows: 54, columns: 31)
+    @ObservedObject private var game = GameOfLife(rows: 50, columns: 30)
 
     // MARK: - State Properties
     @State private var isRunning = false
@@ -50,7 +50,6 @@ struct ModulationView: View {
         let timer = Timer.publish(every: timerSpeed,
                                   on: .main,
                                   in: .common).autoconnect()
-
         ZStack {
             BackView()
             VStack {
@@ -76,19 +75,19 @@ struct ModulationView: View {
 
                 // MARK: - Grid
                 GeometryReader { geometry in
-                        GridView(game: game)
-                            .scaleEffect(scale)
-                            .offset(offset)
-                            .onReceive(timer) { _ in
-                                updateGame()
-                            }
-                            .onDisappear {
-                                isRunning = false
-                                game.newGame()
-                            }
-                            .frame(width: geometry.size.width * scale * currentScale,
-                                   height: geometry.size.height * scale * currentScale)
-                            .scrollIndicators(.hidden)
+                    GridView(game: game)
+                        .scaleEffect(scale)
+                        .offset(offset)
+                        .onReceive(timer) { _ in
+                            updateGame()
+                        }
+                        .onDisappear {
+                            isRunning = false
+                            game.newGame()
+                        }
+                        .frame(width: geometry.size.width * scale * currentScale,
+                               height: geometry.size.height * scale * currentScale)
+                        .scrollIndicators(.hidden)
                 }
 
 
@@ -105,6 +104,7 @@ struct ModulationView: View {
                             .scaledToFit()
                             .foregroundColor(.black)
                     }
+                    .scaledToFill()
 
                     Spacer()
 
@@ -172,6 +172,8 @@ struct ModulationView: View {
             .toolbarBackground(Color.white, for: .navigationBar)
             .toolbarColorScheme(ColorScheme.light, for: .navigationBar)
             .foregroundColor(.black)
+            .padding(.top, Constants.shared.calculateTopPadding())
+            .padding(.bottom, Constants.shared.calculateTopPadding())
         }
         .alert(isPresented: $presentAlert) {
             Alert(title: Text("Стабильное состояние"),

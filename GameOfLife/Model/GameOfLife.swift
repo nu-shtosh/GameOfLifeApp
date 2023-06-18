@@ -34,7 +34,9 @@ class GameOfLife: ObservableObject, Equatable {
     init(rows: Int, columns: Int) {
         self.rows = rows
         self.columns = columns
-        self.grid = Array(repeating: Array(repeating: false, count: columns), count: rows)
+        self.grid = Array(repeating: Array(repeating: false,
+                                           count: columns),
+                          count: rows)
     }
 
     func toggleCell(row: Int, column: Int) {
@@ -53,7 +55,8 @@ class GameOfLife: ObservableObject, Equatable {
 
         for rowIndex in 0..<rows {
             for columnIndex in 0..<columns {
-                let liveNeighbors = self.countLiveNeighbors(row: rowIndex, column: columnIndex)
+                let liveNeighbors = self.countLiveNeighbors(row: rowIndex,
+                                                            column: columnIndex)
                 let isAlive = self.grid[rowIndex][columnIndex]
 
                 if isAlive {
@@ -69,29 +72,40 @@ class GameOfLife: ObservableObject, Equatable {
     }
 
     func newGame() {
-        self.grid = Array(repeating: Array<Bool>(repeating: false, count: columns), count: rows)
+        self.grid = Array(repeating: Array<Bool>(repeating: false,
+                                                 count: columns),
+                          count: rows)
         self.generationCount = 0
     }
 
-    func calculateNextGeneration() -> [[Bool]] {
+    func calculateNextGeneration() -> AsyncStream<[[Bool]]> {
         let rowCount = grid.count
         let columnCount = grid.first?.count ?? 0
 
-        var newGrid = [[Bool]](repeating: [Bool](repeating: false, count: columnCount), count: rowCount)
+        return AsyncStream { continuation in
+            Task.detached {
+                var newGrid = [[Bool]](repeating: [Bool](repeating: false,
+                                                         count: columnCount),
+                                       count: rowCount)
 
-        for rowIndex in 0..<rowCount {
-            for columnIndex in 0..<columnCount {
-                let liveNeighbors = self.countLiveNeighbors(row: rowIndex, column: columnIndex)
-                let element = grid[rowIndex][columnIndex]
-                if element {
-                    newGrid[rowIndex][columnIndex] = liveNeighbors == 2 || liveNeighbors == 3
-                } else {
-                    newGrid[rowIndex][columnIndex] = liveNeighbors == 3
+                for rowIndex in 0..<rowCount {
+                    for columnIndex in 0..<columnCount {
+                        let liveNeighbors = self.countLiveNeighbors(row: rowIndex,
+                                                                    column: columnIndex)
+                        let isAlive = self.grid[rowIndex][columnIndex]
+
+                        if isAlive {
+                            newGrid[rowIndex][columnIndex] = liveNeighbors == 2 || liveNeighbors == 3
+                        } else {
+                            newGrid[rowIndex][columnIndex] = liveNeighbors == 3
+                        }
+                    }
                 }
+
+                continuation.yield(newGrid)
+                continuation.finish()
             }
         }
-
-        return newGrid
     }
 
     func countLiveNeighbors(row: Int, column: Int) -> Int {

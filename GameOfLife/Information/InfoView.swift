@@ -28,14 +28,16 @@ struct InfoView: View {
                                     leading: 10,
                                     bottom: 10,
                                     trailing: 10))
+                .scrollIndicators(.hidden)
+                .navigationBarTitle("Информация", displayMode: .inline)
+                .navigationBarItems(trailing: modulationButton)
+                .toolbarBackground(.visible, for: .navigationBar)
+                .toolbarBackground(Color.white, for: .navigationBar)
+                .toolbarColorScheme(ColorScheme.light, for: .navigationBar)
+                .foregroundColor(.black)
+                .padding(.top, Constants.shared.calculateTopPadding())
+                .padding(.bottom, Constants.shared.calculateTopPadding())
             }
-            .scrollIndicators(.hidden)
-            .navigationBarTitle("Информация", displayMode: .inline)
-            .navigationBarItems(trailing: modulationButton)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarBackground(Color.white, for: .navigationBar)
-            .toolbarColorScheme(ColorScheme.light, for: .navigationBar)
-            .foregroundColor(.black)
         }
     }
 
