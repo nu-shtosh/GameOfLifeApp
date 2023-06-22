@@ -15,11 +15,10 @@ final class Constants {
 
     func calculateTopPadding() -> CGFloat {
         let screenHeight = UIScreen.main.bounds.height
-        print(screenHeight)
         switch screenHeight {
         case 0...667:
             return 64
-        case 667...812:
+        case 668...812:
             return 32
         default:
             return 0
